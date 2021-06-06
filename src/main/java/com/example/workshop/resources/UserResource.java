@@ -1,5 +1,6 @@
 package com.example.workshop.resources;
 
+import com.example.workshop.domain.Post;
 import com.example.workshop.domain.User;
 import com.example.workshop.dto.UserDTO;
 import com.example.workshop.services.UserService;
@@ -56,6 +57,12 @@ public class UserResource {
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value="/{id}/posts" )
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
 
