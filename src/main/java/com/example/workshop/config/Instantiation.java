@@ -2,6 +2,7 @@ package com.example.workshop.config;
 
 import com.example.workshop.domain.Post;
 import com.example.workshop.domain.User;
+import com.example.workshop.dto.AuthorDTO;
 import com.example.workshop.repository.PostRepository;
 import com.example.workshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,19 @@ public class Instantiation implements CommandLineRunner{
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         userRepository.deleteAll();
+        postRepository.deleteAll();
 
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post (null,sdf.parse("21/03/2018"),"Partiu viagem","Eu vou para goiania",maria);
-        Post post2 = new Post (null,sdf.parse("21/03/2018"),"Bom dia","Ja estou em Goiania!",maria);
-
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post (null,sdf.parse("21/03/2018"),"Partiu viagem","Eu vou para goiania",new AuthorDTO(maria));
+        Post post2 = new Post (null,sdf.parse("21/03/2018"),"Bom dia","Ja estou em Goiania!",new AuthorDTO(maria));
+
+
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
