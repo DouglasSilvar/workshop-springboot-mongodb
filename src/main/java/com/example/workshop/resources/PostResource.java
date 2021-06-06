@@ -3,6 +3,7 @@ package com.example.workshop.resources;
 import com.example.workshop.domain.Post;
 import com.example.workshop.domain.User;
 import com.example.workshop.dto.UserDTO;
+import com.example.workshop.resources.util.URL;
 import com.example.workshop.services.PostService;
 import com.example.workshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class PostResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping(value="/titlesearch" )
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text",defaultValue = "")String text){
+        text = URL.decodeParam(text);
+        List<Post> list = service.findByTitle(text);
+        return ResponseEntity.ok().body(list);
+    }
 
 
 
